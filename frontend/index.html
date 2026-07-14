@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOVA — Audio, Reimagined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">NOVA</a>
+      <nav class="main-nav">
+        <a href="index.html">Shop</a>
+        <a href="#" id="ordersLink">Orders</a>
+      </nav>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search products...">
+      </div>
+      <div class="header-actions">
+        <button id="cartBtn" class="icon-btn">
+          Cart <span id="cartCount" class="cart-count">0</span>
+        </button>
+        <button id="authBtn" class="icon-btn">Login</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <p class="eyebrow">Curated products, verified details</p>
+      <h1>Shop smarter,<br>not harder.</h1>
+      <p class="hero-sub">From tech to lifestyle — every listing on NOVA comes with real specs and honest details, no fluff.</p>
+      <a href="#catalog" class="btn-primary">Browse the catalog</a>
+    </div>
+  </section>
+
+  <!-- Trust Strip -->
+  <section class="trust-strip">
+    <div class="container trust-inner">
+      <div class="trust-item">
+        <span class="trust-number">16+</span>
+        <span class="trust-label">Products</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-number">6</span>
+        <span class="trust-label">Categories</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-number">24/7</span>
+        <span class="trust-label">Support</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-number">100%</span>
+        <span class="trust-label">Verified Specs</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Catalog -->
+  <section class="catalog" id="catalog">
+    <div class="container">
+      <div class="catalog-head">
+        <h2>Catalog</h2>
+        <span class="catalog-count" id="catalogCount">— loading —</span>
+      </div>
+      <div class="category-chips" id="categoryChips"></div>
+      <div class="product-grid" id="productGrid">
+        <!-- Product cards injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart Drawer -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="drawer-head">
+      <h3>Your Cart</h3>
+      <button id="closeCart" class="icon-btn">Close</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <p class="empty-state">Your cart is empty.</p>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Total</span>
+        <span id="cartTotal">₹0</span>
+      </div>
+      <button id="checkoutBtn" class="btn-primary full-width">Checkout</button>
+    </div>
+  </aside>
+
+  <!-- Auth Modal -->
+  <div class="modal-overlay" id="authOverlay">
+    <div class="modal">
+      <div class="modal-head">
+        <h3 id="authTitle">Login</h3>
+        <button id="closeAuth" class="icon-btn">Close</button>
+      </div>
+      <form id="authForm">
+        <div class="form-group" id="nameGroup" style="display:none;">
+          <label for="nameInput">Name</label>
+          <input type="text" id="nameInput" placeholder="Vikalp Patel">
+        </div>
+        <div class="form-group">
+          <label for="emailInput">Email</label>
+          <input type="email" id="emailInput" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="passwordInput">Password</label>
+          <input type="password" id="passwordInput" placeholder="••••••••" required>
+        </div>
+        <p class="form-error" id="authError"></p>
+        <button type="submit" class="btn-primary full-width" id="authSubmit">Login</button>
+      </form>
+      <p class="auth-switch">
+        <span id="authSwitchText">New here?</span>
+        <button id="authSwitchBtn" type="button">Create an account</button>
+      </p>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="modal-overlay" id="checkoutOverlay">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Shipping details</h3>
+        <button id="closeCheckout" class="icon-btn">Close</button>
+      </div>
+      <form id="checkoutForm">
+        <div class="form-group">
+          <label for="addressInput">Shipping address</label>
+          <textarea id="addressInput" rows="3" placeholder="House no, street, city, state, PIN" required></textarea>
+        </div>
+        <p class="form-error" id="checkoutError"></p>
+        <button type="submit" class="btn-primary full-width">Place order</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Orders Modal -->
+  <div class="modal-overlay" id="ordersOverlay">
+    <div class="modal orders-modal">
+      <div class="modal-head">
+        <h3>Your Orders</h3>
+        <button id="closeOrders" class="icon-btn">Close</button>
+      </div>
+      <div id="ordersList">
+        <p class="empty-state">No orders yet.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Product Detail Modal -->
+  <div class="modal-overlay" id="detailOverlay">
+    <div class="modal detail-modal">
+      <div class="modal-head">
+        <h3>Product Details</h3>
+        <button id="closeDetail" class="icon-btn">Close</button>
+      </div>
+      <div id="detailContent"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-col">
+        <div class="logo">NOVA</div>
+        <p class="footer-tagline">Curated products, verified details. Built as a CodeAlpha Full Stack Development internship project.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <a href="#catalog">All Products</a>
+        <a href="#" id="footerOrdersLink">My Orders</a>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <a href="https://github.com/" target="_blank" rel="noopener">GitHub Repo</a>
+        <a href="https://www.codealpha.tech" target="_blank" rel="noopener">CodeAlpha</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p class="footer-text">Lucknow, Uttar Pradesh</p>
+        <p class="footer-text">Built by Vikalp Patel</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© 2026 NOVA. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
